@@ -1,7 +1,11 @@
+# defines groups of routes within flask app
+
 from flask import Blueprint, request, jsonify
 from elasticsearch import Elasticsearch
+from flask_cors import CORS
 
 search_routes = Blueprint('search_routes', __name__)
+CORS(search_routes)
 
 # create elasticsearch client
 es = Elasticsearch(['http://localhost:9200'], request_timeout=15)
@@ -28,7 +32,6 @@ def index_doc_with_tfidf(title, url, tfidf_values):
     }
     es.index(index=index_name, doc_type='_doc', body=doc)
     
-
 @search_routes.route('/search', methods=['GET'])
 def search():
     query = request.args.get('query')

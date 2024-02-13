@@ -39,7 +39,7 @@ def run_crawler():
     website = input('Enter:')
     process.crawl('crawlin', start_url=f'http://{website}')
     process.start()
-    # Return crawled items
+    
     return process.crawl.items
 
 # Function to search the index
