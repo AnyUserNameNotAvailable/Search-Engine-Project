@@ -20,41 +20,72 @@
         background-color: #1a1a1a;
         color: #fff;
       }
-
       /* Search CSS */
-      .search {
-        margin: 0 auto;
-        text-align: center;
-      }
-      .search h4 {
-        margin: 240px 0px 20px 0px;
+      .container h4{
+
         font-size: 120px;
         width: auto;
-
       }
-      .search input[type=search] {
-        height: 50px;
-        font-size: 14px;
-        background-image: url(https://cdn2.hubspot.net/hubfs/4004166/bioticresearch_website_assets/images/search_icon.png);
-        background-repeat: no-repeat;
-        background-position: left center;
-        padding-left: 40px;
-        background-color: #fff;
-        border: 1px solid #000;
-        box-shadow: none;
-        border-radius: 20px;
+      .container {
+        width: 100%;
+        min-height: 100vh;
+        padding: 5%;
+        background-image: none;
+        background-position: center;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .search-bar{
+        width: 100%;
+        max-width: 700px;
+        background: rgba(225, 225, 225, 0.2);
+        display: flex;
+        align-items: center;
+        border-radius: 40px;
+        padding: 10px 20px;
+        backdrop-filter: blur(4px) saturate(180%);
+        transition: background-color 0.5s, color 0.5s;
+      }
+      .search-bar input{
+        background: transparent;
+        flex: 1;
+        border: 0;
         outline: none;
-        display: inline-block;
-        margin-top: 10px;
-        width: 30%;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: #565656;
+        box-shadow: none;
       }
-      .search .input-group {
-        width: 60%;
-        margin: 0 auto;
+      .search-bar::placeholder {
+        color: #565656;
+      }
+      .search-bar.dark-mode::placeholder {
+        color: #f4efef;
+      }
+      .search-bar.dark-mode input {
+        color: #f4efef;
+      }
+      .search-bar button img{
+        width: 25px;
+      }
+      .search-bar button{
+        border: 0;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        background: rgba(225, 225, 225, 0.2);
+        cursor: pointer;
+      }
+      .search-bar button:hover{
+        background-color: #a0a5a6;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
       }
       /* Navbar CSS */
       .navbar .nav-item a:hover{
-        background-color: #d6edf3;
+        background-color: #a0a5a6;
         border-radius: 7px;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
       }
@@ -85,11 +116,15 @@
         </div>
     </nav>
     <!--search-->
-    <div class="search">
+    <div class="container">
       <h4>&#10837</h4>
-     <!-- <h5>ADVIN</h5> -->
-      <div class="input-group">
-        <input type="search" class="form-control" autocomplete="" placeholder="Advin: Your Adventure Awaits..." />
+      <!-- <h5>ADVIN</h5> -->
+      <form action="" class="search-bar">
+        <input type="search" autocomplete="" placeholder="Advin: Your Adventure Awaits..." />
+        <button>
+          <img src="https://img.icons8.com/ios/25/search--v1.png" alt="search--v1"/>
+        </button>
+        </form>
       </div>
     </div>
       <script>
