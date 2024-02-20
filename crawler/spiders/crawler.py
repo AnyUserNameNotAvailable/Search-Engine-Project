@@ -14,9 +14,13 @@ class CrawlingSpider(CrawlSpider):
     name = 'crawlin'
     allowed_domains = []  # allow any domain
     USER_AGENT = 'MyCrawlerBot (+http://www.example.com)'
-    # custom_settings = {
-    #     'DOWNLOAD_DELAY': 0.1  # Add a delay between requests
-    # }
+    custom_settings = {
+        'DOWNLOAD_DELAY': 0.1,  # Add a delay between requests
+        'CONCURRENT_REQUESTS': 1,
+        'CONCURRENT_ITEMS' :1,
+        'CLOSESPIDER_PAGECOUNT': 1,
+        'CLOSESPIDER_ITEMCOUNT': 10
+    }
 
     rules = (
         Rule(LinkExtractor(), callback='parse_item', follow=True),
