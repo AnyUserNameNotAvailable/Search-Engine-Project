@@ -16,7 +16,7 @@ class CrawlingSpider(CrawlSpider):
     USER_AGENT = 'MyCrawlerBot (+http://www.example.com)'
     custom_settings = {
         'DOWNLOAD_DELAY': 0.2,  # Add a delay between requests
-        'CLOSESPIDER_ITEMCOUNT': 100
+        'CLOSESPIDER_ITEMCOUNT': 10
     }
 
     rules = (

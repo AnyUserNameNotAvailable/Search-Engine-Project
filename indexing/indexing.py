@@ -14,7 +14,6 @@ def read_from_json(filename):
         with open(filename, 'r') as json_file:
             return json.load(json_file)
     except (FileNotFoundError, json.JSONDecodeError):
-        # Handle the case where the file is not found or cannot be parsed as JSON
         print(f"Error reading {filename}.")
         return []
 
@@ -22,14 +21,14 @@ def index_doc_with_tfidf_to_json(title, url, tfidf_values, filename):
     doc = {
         'title': title,
         'url': url,
-        'tfidf_values': tfidf_values.tolist()  # Convert numpy array to list
+        'tfidf_values': tfidf_values.tolist()
     }
     existing_data = read_from_json(filename)
     existing_data.append(doc)
     write_to_json(existing_data, filename)
 
 def run_crawler():
-    crawled_items = []  # Initialize an empty list to store crawled items
+    crawled_items = []
 
     def crawler_results(item, response, spider):
         crawled_items.append(item)
@@ -37,24 +36,16 @@ def run_crawler():
     process = CrawlerProcess(get_project_settings())
     website = input('Enter:')
     crawler = process.create_crawler('crawlin')
-    
-    # Connect the crawler_results function to the signals
+
     crawler.signals.connect(crawler_results, signal=signals.item_scraped)
-    
+
     process.crawl(crawler, start_url=f'http://{website}')
     process.start()
     process.join()
-    
-    return crawled_items  # Return the list of crawled items
-    
-def calculate_tfidf_and_index_to_json(filename):
-    crawled_items = run_crawler()
-    documents = [item['title'] for item in crawled_items]
-    
-    # debuging print documents for inspection
-    # print("Documents before TF-IDF vectorization:")
-    # print(documents)
 
+    return crawled_items
+
+def calculate_tfidf_and_index_to_json(documents, filename):
     # Create TF-IDF vectorizer
     tfidf_vectorizer = TfidfVectorizer(max_df=0.5)
     tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
@@ -65,11 +56,32 @@ def calculate_tfidf_and_index_to_json(filename):
         index_doc_with_tfidf_to_json(item['title'], item['url'], tfidf_values, filename)
         print(f"Indexed {item['title']} to JSON file")
 
+    return tfidf_vectorizer, tfidf_matrix  # Return vectorizer and matrix
+
+# search documents
+def search_documents(query, json_data, tfidf_vectorizer, tfidf_matrix):
+    query_vector = tfidf_vectorizer.transform([query])
+    similarities = tfidf_matrix.dot(query_vector.T).toarray()
+    sorted_indices = similarities.argsort()[0][::-1]
+    return [json_data[i] for i in sorted_indices]
+    # return [json_data[i] for i in sorted_indices[:10]]  # Return the top 10 sorted documents
+    # return [json_data[i] for i in sorted_indices[-10:]]  # Return the bottom 10 sorted documents
+    # return [json_data[i] for i in sorted_indices[::10]]  # Return the every 10th sorted document
+    # return [json_data[i] for i in sorted_indices[::100]]  # Return the every 100th sorted document
+    # return [json_data[i] for i in sorted_indices[::1000]]  # Return the every 1000th sorted document
+
+
 # Run the crawler and index to JSON file
 json_filename = 'data.json'
-calculate_tfidf_and_index_to_json(json_filename)
+crawled_items = run_crawler()
+
+documents = [item['title'] for item in crawled_items]
+tfidf_vectorizer, tfidf_matrix = calculate_tfidf_and_index_to_json(documents, json_filename)
 
 # Example search in the loaded JSON data
 json_data = read_from_json(json_filename)
-search_result = [item for item in json_data if 'python' in item['title'].lower()]
+
+query = input("Enter Search Query: ")
+search_result = search_documents(query, json_data, tfidf_vectorizer, tfidf_matrix)
+
 print(search_result)
