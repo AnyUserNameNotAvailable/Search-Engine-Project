@@ -52,8 +52,8 @@ def calculate_tfidf_and_index_to_json(filename):
     documents = [item['title'] for item in crawled_items]
     
     # debuging print documents for inspection
-    print("Documents before TF-IDF vectorization:")
-    print(documents)
+    # print("Documents before TF-IDF vectorization:")
+    # print(documents)
 
     # Create TF-IDF vectorizer
     tfidf_vectorizer = TfidfVectorizer(max_df=0.5)
