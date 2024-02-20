@@ -13,7 +13,9 @@ def read_from_json(filename):
     try:
         with open(filename, 'r') as json_file:
             return json.load(json_file)
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Handle the case where the file is not found or cannot be parsed as JSON
+        print(f"Error reading {filename}.")
         return []
 
 def index_doc_with_tfidf_to_json(title, url, tfidf_values, filename):
@@ -48,15 +50,20 @@ def run_crawler():
 def calculate_tfidf_and_index_to_json(filename):
     crawled_items = run_crawler()
     documents = [item['title'] for item in crawled_items]
+    
+    # debuging print documents for inspection
+    print("Documents before TF-IDF vectorization:")
+    print(documents)
 
     # Create TF-IDF vectorizer
-    tfidf_vectorizer = TfidfVectorizer()
+    tfidf_vectorizer = TfidfVectorizer(max_df=0.5)
     tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
 
     # Index documents with TF-IDF to JSON file
     for i, item in enumerate(crawled_items):
         tfidf_values = tfidf_matrix[i].toarray().flatten()
         index_doc_with_tfidf_to_json(item['title'], item['url'], tfidf_values, filename)
+        print(f"Indexed {item['title']} to JSON file")
 
 # Run the crawler and index to JSON file
 json_filename = 'data.json'

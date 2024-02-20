@@ -15,11 +15,8 @@ class CrawlingSpider(CrawlSpider):
     allowed_domains = []  # allow any domain
     USER_AGENT = 'MyCrawlerBot (+http://www.example.com)'
     custom_settings = {
-        'DOWNLOAD_DELAY': 0.1,  # Add a delay between requests
-        'CONCURRENT_REQUESTS': 1,
-        'CONCURRENT_ITEMS' :1,
-        'CLOSESPIDER_PAGECOUNT': 1,
-        'CLOSESPIDER_ITEMCOUNT': 10
+        'DOWNLOAD_DELAY': 0.2,  # Add a delay between requests
+        'CLOSESPIDER_ITEMCOUNT': 100
     }
 
     rules = (

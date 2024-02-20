@@ -24,74 +24,90 @@
       }
 
       /* Search CSS */
-      .search {
-        margin: 0 auto;
-        text-align: center;
+      .search-bar {
+        width: 100%;
+        max-width: 700px;
+        background: rgba(225, 225, 225, 0.2);
+        display: flex;
+        align-items: center;
+        border-radius: 40px;
+        padding: 10px 20px;
+        backdrop-filter: blur(4px) saturate(180%);
+        transition: background-color 0.5s, color 0.5s;
       }
-      .search h4 {
-        margin: 240px 0px 20px 0px;
-        font-size: 120px;
-        width: auto;
-
-      }
-      .search input[type=search] {
-        height: 50px;
-        font-size: 14px;
-        background-image: url(https://cdn2.hubspot.net/hubfs/4004166/bioticresearch_website_assets/images/search_icon.png);
-        background-repeat: no-repeat;
-        background-position: left center;
-        padding-left: 40px;
-        background-color: #fff;
-        border: 1px solid #000;
-        box-shadow: none;
-        border-radius: 20px;
+      .search-bar input {
+        background: transparent;
+        flex: 1;
+        border: 0;
         outline: none;
-        display: inline-block;
-        margin-top: 10px;
-        width: 30%;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: #565656;
+        box-shadow: none;
       }
-      .search .input-group {
-        width: 60%;
-        margin: 0 auto;
+      .search-bar.dark-mode {
+        background-color: #1a1a1a;
+        color: #fff;
       }
-      /* Navbar CSS */
-      .navbar .nav-item a:hover{
-        background-color: #d6edf3;
-        border-radius: 7px;
+      .search-bar.dark-mode input {
+        color: #fff;
+      }
+      .search-bar::placeholder {
+        color: #565656;
+      }
+      .search-bar.dark-mode::placeholder {
+        color: #fff;
+      }
+      .search-bar button img {
+        width: 25px;
+      }
+      .search-bar button {
+        border: 0;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        background: rgba(225, 225, 225, 0.2);
+        cursor: pointer;
+      }
+      .search-bar button:hover {
+        background-color: #a0a5a6;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
       }
-
+      /* Navbar CSS */
+      .nav-item a{
+        font-size: 48px;
+        padding: 10px 128px;
+      }
+      .hr{
+        border: none;
+        height: 1px;
+        background-color: #1a1a1a;
+        margin-top: -50px 0;
+      }
     </style>
     <title>Results</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href=".">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="about.html">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="https://github.com/AnyUserNameNotAvailable/Search-Engine-Project">GitHub</a>
-              </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#" onclick="darkModeToggle()">Mode</a>
-              </li>
-            </ul>
-        </div>
-    </nav>
-    <!--search-->
-    <div class="search">
-        <div class="input-group">
-            <input id="searchInput" type="search" class="form-control" autocomplete="" placeholder="Advin: Your Adventure Awaits..." />
-        </div>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href=".">&#10837</a>
+          </li>
+        </ul>
+        <!-- Move the search bar and container into the navbar -->
+        <form action="" class="search-bar">
+          <input type="search" autocomplete="" placeholder="Advin: Your Adventure Awaits..." />
+          <button>
+            <img src="https://img.icons8.com/ios/25/search--v1.png" alt="search--v1"/>
+          </button>
+        </form>
+      </div>
     </div>
-    <div id="searchResults"></div> <!-- Container for search results -->
+  </nav>
+  <hr>
+  <div id="searchResults"></div> <!-- Container for search results -->
     
     <script>
       // JavaScript to toggle dark mode
