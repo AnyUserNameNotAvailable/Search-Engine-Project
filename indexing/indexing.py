@@ -1,7 +1,9 @@
 import json
 from sklearn.feature_extraction.text import TfidfVectorizer
 from scrapy.crawler import CrawlerProcess
+from scrapy import signals
 from scrapy.utils.project import get_project_settings
+
 
 def write_to_json(data, filename):
     with open(filename, 'w') as json_file:
@@ -25,19 +27,27 @@ def index_doc_with_tfidf_to_json(title, url, tfidf_values, filename):
     write_to_json(existing_data, filename)
 
 def run_crawler():
+    crawled_items = []  # Initialize an empty list to store crawled items
+
+    def crawler_results(item, response, spider):
+        crawled_items.append(item)
+
     process = CrawlerProcess(get_project_settings())
     website = input('Enter:')
-    process.crawl('crawlin', start_url=f'http://{website}')
+    crawler = process.create_crawler('crawlin')
+    
+    # Connect the crawler_results function to the signals
+    crawler.signals.connect(crawler_results, signal=signals.item_scraped)
+    
+    process.crawl(crawler, start_url=f'http://{website}')
     process.start()
     process.join()
     
-    return process.crawl.get_output()
-
+    return crawled_items  # Return the list of crawled items
+    
 def calculate_tfidf_and_index_to_json(filename):
-    documents = []  # Collect all documents
     crawled_items = run_crawler()
-    for item in crawled_items:
-        documents.append(item['title'])
+    documents = [item['title'] for item in crawled_items]
 
     # Create TF-IDF vectorizer
     tfidf_vectorizer = TfidfVectorizer()
