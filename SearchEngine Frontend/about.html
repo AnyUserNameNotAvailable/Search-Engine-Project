@@ -43,11 +43,13 @@
         color: #fff;
       }
       /* Navbar CSS */
-      .navbar .nav-item a:hover{
-        background-color: #d6edf3;
+      .navbar .nav-item a:hover {
+        background-color: #a0a5a6;
         border-radius: 7px;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-
+      }
+      .navbar-collapse.collapse.show {
+        display: flex !important;
       }
       /* Container CSS */
       .container .card {
@@ -97,6 +99,7 @@
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href=".">Home</a>
@@ -114,6 +117,7 @@
             </li>
           </ul>
         </div>
+      </div>
     </nav>
     <!--About Section Card Container-->
     <div class="Header">
