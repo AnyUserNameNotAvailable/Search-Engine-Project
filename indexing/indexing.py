@@ -3,11 +3,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from scrapy.crawler import CrawlerProcess
 from scrapy import signals
 from scrapy.utils.project import get_project_settings
+import numpy as np
 
 
 def write_to_json(data, filename):
     with open(filename, 'w') as json_file:
         json.dump(data, json_file, indent=2)
+
 
 def read_from_json(filename):
     try:
@@ -16,6 +18,13 @@ def read_from_json(filename):
     except (FileNotFoundError, json.JSONDecodeError):
         print(f"Error reading {filename}.")
         return []
+
+
+def load_data_from_json(json_file):
+    with open(json_file, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    return data
+
 
 def index_doc_with_tfidf_to_json(title, url, tfidf_values, filename):
     doc = {
@@ -27,23 +36,24 @@ def index_doc_with_tfidf_to_json(title, url, tfidf_values, filename):
     existing_data.append(doc)
     write_to_json(existing_data, filename)
 
-def run_crawler():
+
+def run_crawler(start_url):
     crawled_items = []
 
     def crawler_results(item, response, spider):
         crawled_items.append(item)
 
     process = CrawlerProcess(get_project_settings())
-    website = input('Enter:')
     crawler = process.create_crawler('crawlin')
 
     crawler.signals.connect(crawler_results, signal=signals.item_scraped)
 
-    process.crawl(crawler, start_url=f'http://{website}')
+    process.crawl(crawler, start_url=start_url)
     process.start()
     process.join()
 
     return crawled_items
+
 
 def calculate_tfidf_and_index_to_json(documents, filename):
     # Create TF-IDF vectorizer
@@ -58,30 +68,40 @@ def calculate_tfidf_and_index_to_json(documents, filename):
 
     return tfidf_vectorizer, tfidf_matrix  # Return vectorizer and matrix
 
-# search documents
-def search_documents(query, json_data, tfidf_vectorizer, tfidf_matrix):
-    query_vector = tfidf_vectorizer.transform([query])
-    similarities = tfidf_matrix.dot(query_vector.T).toarray()
-    sorted_indices = similarities.argsort()[0][::-1]
-    return [json_data[i] for i in sorted_indices]
-    # return [json_data[i] for i in sorted_indices[:10]]  # Return the top 10 sorted documents
-    # return [json_data[i] for i in sorted_indices[-10:]]  # Return the bottom 10 sorted documents
-    # return [json_data[i] for i in sorted_indices[::10]]  # Return the every 10th sorted document
-    # return [json_data[i] for i in sorted_indices[::100]]  # Return the every 100th sorted document
-    # return [json_data[i] for i in sorted_indices[::1000]]  # Return the every 1000th sorted document
+
+# Search documents
+def search_documents(query, json_data):
+    query_vector = np.array([0.0] * len(json_data[0]['tfidf_values']))  # Initialize query vector
+    for term in query.split():
+        if term in json_data[0]['tfidf_values']:
+            query_vector += np.array(json_data[0]['tfidf_values'][term])
+
+    # Calculate cosine similarities
+    cosine_similarities = [np.dot(query_vector, doc['tfidf_values']) for doc in json_data]
+
+    # Get indices of sorted similarities
+    sorted_indices = np.argsort(cosine_similarities)[::-1]
+
+    # Return the top 10 sorted documents
+    return [json_data[i] for i in sorted_indices[:10]]  # Return the top 10 sorted documents
 
 
-# Run the crawler and index to JSON file
+# Set the JSON filename and website URL
 json_filename = 'data.json'
-crawled_items = run_crawler()
-
-documents = [item['title'] for item in crawled_items]
-tfidf_vectorizer, tfidf_matrix = calculate_tfidf_and_index_to_json(documents, json_filename)
 
 # Example search in the loaded JSON data
-json_data = read_from_json(json_filename)
-
 query = input("Enter Search Query: ")
-search_result = search_documents(query, json_data, tfidf_vectorizer, tfidf_matrix)
 
+# Load data from JSON
+json_data = load_data_from_json(json_filename)
+
+# Perform search
+search_result = search_documents(query, json_data)
+
+# Display or process search results as needed
 print(search_result)
+
+website_url = input('Enter website URL: ')
+crawled_items = run_crawler(start_url=f'http://{website_url}')
+
+
