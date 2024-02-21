@@ -81,9 +81,16 @@ def search_documents(query, json_data):
 
     # Get indices of sorted similarities
     sorted_indices = np.argsort(cosine_similarities)[::-1]
+    
+    for i in sorted_indices[:10]:
+        print(f"Title: {json_data[i]['title']}\nURL: {json_data[i]['url']}\n")
 
-    # Return the top 10 sorted documents
     return [json_data[i] for i in sorted_indices[:10]]  # Return the top 10 sorted documents
+    # return [json_data[i] for i in sorted_indices[:10]]  # Return the top 10 sorted documents
+    # return [json_data[i] for i in sorted_indices[-10:]]  # Return the bottom 10 sorted documents
+    # return [json_data[i] for i in sorted_indices[::10]]  # Return the every 10th sorted document
+    # return [json_data[i] for i in sorted_indices[::100]]  # Return the every 100th sorted document
+    # return [json_data[i] for i in sorted_indices[::1000]]  # Return the every 1000th sorted document
 
 
 # Set the JSON filename and website URL
@@ -98,8 +105,6 @@ json_data = load_data_from_json(json_filename)
 # Perform search
 search_result = search_documents(query, json_data)
 
-# Display or process search results as needed
-print(search_result)
 
 website_url = input('Enter website URL: ')
 crawled_items = run_crawler(start_url=f'http://{website_url}')
