@@ -132,11 +132,12 @@
   <!--search-->
   <div class="container">
     <h4>&#10837</h4>
-    <form action="" class="search-bar">
+    <form id="searchForm" action="" class="search-bar">
       <input type="search" autocomplete="" placeholder="Advin: Your Adventure Awaits..." />
-      <button>
+      <button id="searchButton" type="button">
         <img src="https://img.icons8.com/ios/25/search--v1.png" alt="search--v1"/>
-      </button>
+    </button>
+    
     </form>
   </div>
 
@@ -170,14 +171,31 @@
       });
     });
 
-    // Function to open or close the dropdown menu
-  /*const toggleDropdown = () => {
-    const navbarCollapse = document.querySelector('.navbar-collapse');
-    navbarCollapse.classList.toggle('show');
-  };
-
-    document.getElementById('drop-down').addEventListener('click', toggleDropdown);
-    */
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.querySelector('.search-bar input');
+      const searchButton = document.getElementById('searchButton');
+  
+      const searchFunction = () => {
+          const query = searchInput.value.trim();
+          if (query !== '') {
+              search_Backend(query);
+          } else {
+              alert('Please enter a search query.');
+          }
+      };
+  
+      searchInput.addEventListener('keypress', function (event) {
+          if (event.key === 'Enter') {
+              searchFunction();
+          }
+      });
+  
+      searchButton.addEventListener('click', function (event) {
+          event.preventDefault();
+          searchFunction();
+      });
+  });
+  
 
   </script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

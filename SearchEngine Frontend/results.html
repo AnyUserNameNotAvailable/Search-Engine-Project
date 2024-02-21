@@ -102,7 +102,7 @@
           </li>
         </ul>
         <!-- Move the search bar and container into the navbar -->
-        <form action="" class="search-bar">
+        <form id="searchForm" action="" class="search-bar">
           <input type="search" autocomplete="" placeholder="Advin: Your Adventure Awaits..." />
           <button>
             <img src="https://img.icons8.com/ios/25/search--v1.png" alt="search--v1"/>
@@ -112,7 +112,9 @@
     </div>
   </nav>
   <hr>
-  <div id="searchResults"></div> <!-- Container for search results -->
+  <div id="searchResults">
+
+  </div> <!-- Container for search results -->
     
     <script>
       // JavaScript to toggle dark mode
@@ -132,37 +134,20 @@
         }
       });  
         // JavaScript code to retrieve and display search results
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchButton = document.getElementById('searchButton');
-            const searchInput = document.getElementById('searchInput');
-            const searchResultsDiv = document.getElementById('searchResults');
-
-            searchButton.addEventListener('click', () => {
-                const query = searchInput.value.trim(); // Get the search query
-                if (query !== '') {
-                    searchBackend(query); // Call the function to search the backend
-                } else {
-                    alert('Please enter a search query.');
-                }
-            });
-
-            function searchBackend(query) {
-                fetch(`http://localhost:9200/search?query=${query}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Display search results on the page
-                        searchResultsDiv.innerHTML = ''; // Clear previous results
-                        data.hits.hits.forEach(hit => {
-                            const resultItem = document.createElement('div');
-                            resultItem.textContent = hit._source.title; // Display title of each search result
-                            searchResultsDiv.appendChild(resultItem);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching search results:', error);
-                    });
-            }
+      document.addEventListener('DOMContentLoaded', () => {
+        const searchResultsDiv = document.getElementById('searchResults');
+        
+        // Get the search results from the query parameter
+        const searchResults = JSON.parse(decodeURIComponent(window.location.search).substring(1)).results;
+        
+        // Display search results on the page
+        searchResultsDiv.innerHTML = ''; // Clear previous results
+        searchResults.forEach(result => {
+            const resultItem = document.createElement('div');
+            resultItem.textContent = result.title; // Adjust this based on your actual data structure
+            searchResultsDiv.appendChild(resultItem);
         });
+    });
     </script>
 </body>
 </html>

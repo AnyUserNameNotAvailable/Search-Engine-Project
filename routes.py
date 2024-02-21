@@ -1,15 +1,18 @@
-from flask import Blueprint, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
-from crawler import run_crawler
+from scrapy.crawler import CrawlerProcess
 import json
+import numpy as np
+from .indexing import search_documents
 
-search_routes = Blueprint('search_routes', __name__)
-CORS(search_routes)
 
-# JSON file to store indexed data
-json_filename = 'data.json'
+app = Flask(__name__)
 
+# json file storing indexed data
+json_file = 'data.json'
+
+# json functions
 def write_to_json(data, filename):
     with open(filename, 'w') as json_file:
         json.dump(data, json_file, indent=2)
@@ -18,65 +21,49 @@ def read_from_json(filename):
     try:
         with open(filename, 'r') as json_file:
             return json.load(json_file)
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
+        print(f"Error reading {filename}.")
         return []
 
-def index_doc_with_tfidf_to_json(title, url, tfidf_values):
+def load_data_from_json(json_file):
+    with open(json_file, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    return data
+
+def index_doc_with_tfidf_to_json(title, url, tfidf_values, filename):
     doc = {
         'title': title,
         'url': url,
-        'tfidf_values': tfidf_values.tolist()  # Convert numpy array to list
+        'tfidf_values': tfidf_values.tolist()
     }
-    existing_data = read_from_json(json_filename)
+    existing_data = read_from_json(filename)
     existing_data.append(doc)
-    write_to_json(existing_data, json_filename)
+    write_to_json(existing_data, filename)
 
-@search_routes.route('/search', methods=['GET'])
+
+@app.route('/search', methods=['POST'])
 def search():
-    query = request.args.get('query')
-    json_data = read_from_json(json_filename)
+    query = request.form.get('query')
+    json_data = load_data_from_json('data.json')
+    search_results = search_documents(query, json_data)
     
-    # Example search in the loaded JSON data
-    results = [item for item in json_data if query.lower() in item['title'].lower()]
-    return jsonify(results)
+    # Return the search results as JSON
+    return jsonify({'results': search_results})
 
-def search_in_json(query, json_data):
-    # Example search in the provided JSON data
-    results = [item for item in json_data if query.lower() in item['title'].lower()]
-    return jsonify(results)
 
-@search_routes.route('/index', methods=['POST'])
+@app.route('/index', methods=['POST'])
 def index():
-    website = request.json.get('website')
-    crawled_items = run_crawler(website)
-    
-    documents = []
-    for item in crawled_items:
-        documents.append(item['title'])
+    # Load indexed data from JSON file
+    data = load_data_from_json(json_file)
 
     # Create TF-IDF vectorizer
-    tfidf_vectorizer = TfidfVectorizer()
-    tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
+    vectorizer = TfidfVectorizer()
 
-    # Index documents with TF-IDF to JSON file
-    for i, item in enumerate(crawled_items):
-        tfidf_values = tfidf_matrix[i].toarray().flatten()
-        index_doc_with_tfidf_to_json(item['title'], item['url'], tfidf_values)
+    # Fit and transform the indexed documents
+    tfidf_values = vectorizer.fit_transform([doc['title'] for doc in data])
 
-    return jsonify({'message': 'Indexing successful'})
+    # Index each document with its title, URL, and TF-IDF values
+    for i, doc in enumerate(data):
+        index_doc_with_tfidf_to_json(doc['title'], doc['url'], tfidf_values[i], json_file)
 
-def index_in_json(crawled_items, json_data):
-    documents = []
-    for item in crawled_items:
-        documents.append(item['title'])
-
-    # Create TF-IDF vectorizer
-    tfidf_vectorizer = TfidfVectorizer()
-    tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
-
-    # Index documents with TF-IDF to JSON data
-    for i, item in enumerate(crawled_items):
-        tfidf_values = tfidf_matrix[i].toarray().flatten()
-        index_doc_with_tfidf_to_json(item['title'], item['url'], tfidf_values)
-
-    return jsonify({'message': 'Indexing successful'})
+    return jsonify({'message': 'Indexing complete'})
