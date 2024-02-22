@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from scrapy.crawler import CrawlerProcess
 import json
 import numpy as np
-from .indexing import search_documents
+from indexing import search_documents
 
 
 app = Flask(__name__)

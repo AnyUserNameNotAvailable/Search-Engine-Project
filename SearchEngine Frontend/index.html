@@ -185,14 +185,21 @@
       };
   
       searchInput.addEventListener('keypress', function (event) {
+        const query = searchInput.value.trim();
           if (event.key === 'Enter') {
+            event.preventDefault();
+              window.location.href = "./results.html"
               searchFunction();
           }
       });
   
       searchButton.addEventListener('click', function (event) {
+        const query = searchInput.value.trim();
           event.preventDefault();
-          searchFunction();
+          if (query !== '') {
+            window.location.href = "./results.html"
+            searchFunction();
+          }
       });
   });
   

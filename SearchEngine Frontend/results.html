@@ -127,27 +127,35 @@
       };
 
       // Check for dark mode preference on page load
-      document.addEventListener('DOMContentLoaded', () => {
-        const savedDarkMode = localStorage.getItem('darkMode');
-        if (savedDarkMode === 'true') {
-          body.classList.add('dark-mode');
-        }
-      });  
-        // JavaScript code to retrieve and display search results
-      document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener('DOMContentLoaded', async () => {
         const searchResultsDiv = document.getElementById('searchResults');
         
-        // Get the search results from the query parameter
-        const searchResults = JSON.parse(decodeURIComponent(window.location.search).substring(1)).results;
-        
-        // Display search results on the page
-        searchResultsDiv.innerHTML = ''; // Clear previous results
-        searchResults.forEach(result => {
-            const resultItem = document.createElement('div');
-            resultItem.textContent = result.title; // Adjust this based on your actual data structure
-            searchResultsDiv.appendChild(resultItem);
-        });
+        // Get the search query from the input field
+        const searchQuery = document.querySelector('.search-bar input').value;
+    
+        if (searchQuery) {
+            // Make an AJAX request to the /search endpoint
+            const response = await fetch(`/search`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `query=${encodeURIComponent(searchQuery)}`,
+            });
+    
+            // Parse the JSON response
+            const searchResults = await response.json();
+    
+            // Display search results on the page
+            searchResultsDiv.innerHTML = ''; // Clear previous results
+            searchResults.results.forEach(result => {
+                const resultItem = document.createElement('div');
+                resultItem.textContent = `Title: ${result.title}, URL: ${result.url}`;
+                searchResultsDiv.appendChild(resultItem);
+            });
+        }
     });
+    
     </script>
 </body>
 </html>
