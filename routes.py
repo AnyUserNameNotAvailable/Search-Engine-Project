@@ -1,9 +1,6 @@
-from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
+from flask import Flask, request, jsonify
 from sklearn.feature_extraction.text import TfidfVectorizer
-from scrapy.crawler import CrawlerProcess
 import json
-import numpy as np
 from indexing import search_documents
 
 
