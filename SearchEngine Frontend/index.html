@@ -142,6 +142,30 @@
   </div>
 
   <script>
+    function search_Backend() {
+      const query = document.getElementById('searchQuery').value; // Assuming 'searchQuery' is the ID of your search input field
+  
+      fetch('/search', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ query: query }), // Send the search query as JSON
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Assuming 'resultsContainer' is the ID of the div where you want to display the results
+          const resultsContainer = document.getElementById('resultsContainer');
+          resultsContainer.innerHTML = ''; // Clear previous results
+  
+          data.results.forEach(result => {
+              const resultElement = document.createElement('div');
+              resultElement.textContent = result; // Assuming the result is just text; adjust as needed
+              resultsContainer.appendChild(resultElement);
+          });
+      })
+      .catch(error => console.error('Error:', error));
+  }  
     // JavaScript to toggle dark mode
     const body = document.body;
 
@@ -158,11 +182,11 @@
         body.classList.add('dark-mode');
       }
     });
-
+    
     // search event on keypress
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.querySelector('.search input[type=search]');
-
+      
       searchInput.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
           const query = searchInput.value;
@@ -183,7 +207,7 @@
               alert('Please enter a search query.');
           }
       };
-  
+      
       searchInput.addEventListener('keypress', function (event) {
         const query = searchInput.value.trim();
           if (event.key === 'Enter') {

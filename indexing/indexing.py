@@ -108,5 +108,6 @@ search_result = search_documents(query, json_data)
 
 website_url = input('Enter website URL: ')
 crawled_items = run_crawler(start_url=f'http://{website_url}')
+tfidf_vectorizer, tfidf_matrix = calculate_tfidf_and_index_to_json(documents=[item['title'] for item in crawled_items], filename=json_filename)
 
 
