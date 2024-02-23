@@ -25,6 +25,11 @@ def load_data_from_json(json_file):
         data = json.load(file)
     return data
 
+def delete_data_from_json(json_file):
+    with open(json_file, 'w', encoding='utf-8') as file:
+        file.write("[]")
+    return []
+
 
 def index_doc_with_tfidf_to_json(title, url, tfidf_values, filename):
     doc = {
@@ -104,10 +109,8 @@ json_data = load_data_from_json(json_filename)
 
 # Perform search
 search_result = search_documents(query, json_data)
-
+delete_data_from_json(json_filename)
 
 website_url = input('Enter website URL: ')
 crawled_items = run_crawler(start_url=f'http://{website_url}')
 tfidf_vectorizer, tfidf_matrix = calculate_tfidf_and_index_to_json(documents=[item['title'] for item in crawled_items], filename=json_filename)
-
-
