@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <style>
     * {
       font-family: 'Open Sans';
     }
+
     /* Modes */
     body {
       transition: background-color 0.5s;
     }
+
     /* Light Mode Styles */
     body.light-mode {
       background-color: #fff;
       color: #000;
     }
+
     /* Dark Mode Styles */
     body.dark-mode {
       background-color: #1a1a1a;
       color: #fff;
     }
+
     /* Search CSS */
     .container h4 {
       font-size: 120px;
       width: auto;
     }
+
     .container {
       width: 100%;
       min-height: 100vh;
@@ -39,6 +46,7 @@
       justify-content: center;
       flex-direction: column;
     }
+
     .search-bar {
       width: 100%;
       max-width: 700px;
@@ -50,6 +58,7 @@
       backdrop-filter: blur(4px) saturate(180%);
       transition: background-color 0.5s, color 0.5s;
     }
+
     .search-bar input {
       background: transparent;
       flex: 1;
@@ -60,22 +69,28 @@
       color: #565656;
       box-shadow: none;
     }
+
     .search-bar.dark-mode {
       background-color: #1a1a1a;
       color: #fff;
     }
+
     .search-bar.dark-mode input {
       color: #fff;
     }
+
     .search-bar::placeholder {
       color: #565656;
     }
+
     .search-bar.dark-mode::placeholder {
       color: #fff;
     }
+
     .search-bar button img {
       width: 25px;
     }
+
     .search-bar button {
       border: 0;
       border-radius: 50%;
@@ -84,28 +99,32 @@
       background: rgba(225, 225, 225, 0.2);
       cursor: pointer;
     }
+
     .search-bar button:hover {
       background-color: #a0a5a6;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     }
-    .search-bar:hover{
+
+    .search-bar:hover {
       background-color: #e1e1e1;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 
     }
+
     /* Navbar CSS */
     .navbar .nav-item a:hover {
       background-color: #a0a5a6;
       border-radius: 7px;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     }
+
     .navbar-collapse.collapse.show {
       display: flex !important;
     }
-
   </style>
   <title>Advin</title>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
@@ -118,7 +137,8 @@
             <a class="nav-link active" aria-current="page" href="about.html">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="https://github.com/AnyUserNameNotAvailable/Search-Engine-Project">GitHub</a>
+            <a class="nav-link active" aria-current="page"
+              href="https://github.com/AnyUserNameNotAvailable/Search-Engine-Project">GitHub</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -135,37 +155,37 @@
     <form id="searchForm" action="" class="search-bar">
       <input type="search" autocomplete="" placeholder="Advin: Your Adventure Awaits..." />
       <button id="searchButton" type="button">
-        <img src="https://img.icons8.com/ios/25/search--v1.png" alt="search--v1"/>
-    </button>
-    
+        <img src="https://img.icons8.com/ios/25/search--v1.png" alt="search--v1" />
+      </button>
+
     </form>
   </div>
 
   <script>
     function search_Backend() {
       const query = document.getElementById('searchQuery').value; // Assuming 'searchQuery' is the ID of your search input field
-  
+
       fetch('/search', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ query: query }), // Send the search query as JSON
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: query }), // Send the search query as JSON
       })
-      .then(response => response.json())
-      .then(data => {
+        .then(response => response.json())
+        .then(data => {
           // Assuming 'resultsContainer' is the ID of the div where you want to display the results
           const resultsContainer = document.getElementById('resultsContainer');
           resultsContainer.innerHTML = ''; // Clear previous results
-  
+
           data.results.forEach(result => {
-              const resultElement = document.createElement('div');
-              resultElement.textContent = result; // Assuming the result is just text; adjust as needed
-              resultsContainer.appendChild(resultElement);
+            const resultElement = document.createElement('div');
+            resultElement.textContent = result; // Assuming the result is just text; adjust as needed
+            resultsContainer.appendChild(resultElement);
           });
-      })
-      .catch(error => console.error('Error:', error));
-  }  
+        })
+        .catch(error => console.error('Error:', error));
+    }
     // JavaScript to toggle dark mode
     const body = document.body;
 
@@ -182,11 +202,11 @@
         body.classList.add('dark-mode');
       }
     });
-    
+
     // search event on keypress
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.querySelector('.search input[type=search]');
-      
+
       searchInput.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
           const query = searchInput.value;
@@ -198,39 +218,46 @@
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.querySelector('.search-bar input');
       const searchButton = document.getElementById('searchButton');
-  
+
       const searchFunction = () => {
-          const query = searchInput.value.trim();
-          if (query !== '') {
-              search_Backend(query);
-          } else {
-              alert('Please enter a search query.');
-          }
+        const query = searchInput.value.trim();
+        if (query !== '') {
+          search_Backend(query);
+        } else {
+          alert('Please enter a search query.');
+        }
       };
-      
+
       searchInput.addEventListener('keypress', function (event) {
         const query = searchInput.value.trim();
-          if (event.key === 'Enter') {
-            event.preventDefault();
-              window.location.href = "./results.html"
-              searchFunction();
-          }
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          window.location.href = "./results.html"
+          searchFunction();
+        }
       });
-  
+
       searchButton.addEventListener('click', function (event) {
         const query = searchInput.value.trim();
-          event.preventDefault();
-          if (query !== '') {
-            window.location.href = "./results.html"
-            searchFunction();
-          }
+        event.preventDefault();
+        if (query !== '') {
+          window.location.href = "./results.html"
+          searchFunction();
+        }
       });
-  });
-  
+    });
+
 
   </script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>

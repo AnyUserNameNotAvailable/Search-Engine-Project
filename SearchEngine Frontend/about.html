@@ -1,172 +1,200 @@
 <!doctype html>
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href='open-sans.css' rel='stylesheet' type='text/css'>
-    <style>
-      * {
-        font-family: 'Open Sans';
-      }
-      /* Modes */
-      body {
-        transition: background-color 0.5s;
-      }
 
-      /* Light Mode Styles */
-      body.light-mode {
-        background-color: #fff;
-        color: #000;
-      }
-      /* Dark Mode Styles */
-      body.dark-mode {
-        background-color: #1a1a1a;
-        color: #fff;
-      }
-      body.dark-mode .container .card {
-        background-color: rgba(26, 26, 26, 0.8);
-      }
-      body.dark-mode .container .slide .content {
-        background-color: #1a1a1a;
-        color: #fff;
-      }
-      body.dark-mode .container .slide .content h5 {
-        background-color: #1a1a1a;
-        color: #fff;
-      }
-      body.dark-mode .container .slide .content p {
-        background-color: #1a1a1a;
-        color: #fff;
-      }
-      .dark-mode .Header {
-        color: #fff;
-      }
-      /* Navbar CSS */
-      .navbar .nav-item a:hover {
-        background-color: #a0a5a6;
-        border-radius: 7px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-      }
-      .navbar-collapse.collapse.show {
-        display: flex !important;
-      }
-      /* Container CSS */
-      .container .card {
-        display: flex;
-        justify-content: space-between;
-        margin: 120px auto;
-        text-align: auto;
-        margin-left: auto;
-        width: auto;
-        position: relative;
-        z-index: 1; 
-      }
-      .container .card .slide .content p {
-        margin: 0;
-        padding: 0;
-        text-align: auto;
-        color: #414141;
-      } 
-      .container .card .slide .content h5 {
-        margin: 0 0 10px 0;
-        padding: 0;
-        font-size: 24px;
-        text-align: center;
-        color: #414141;
-      } 
-      .Header{
-        margin-top: 70px;
-        margin-bottom: -70px;
-        font-size: 24px;
-        text-align: center;
-        color: #414141;
-      }
-      .highlight-text {
-        color: #007BFF;
-      }
-      .Git a:hover{
-        background-color: #d6edf3;
-        border-radius: 7px;
-        padding: 10px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-      }
-      
-    </style>
-    <title>Advin</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href=".">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="about.html">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="https://github.com/AnyUserNameNotAvailable/Search-Engine-Project">GitHub</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" onclick="darkModeToggle()">Mode</a>
-            </li>
-          </ul>
-        </div>
+<head>
+  <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href='open-sans.css' rel='stylesheet' type='text/css'>
+  <style>
+    * {
+      font-family: 'Open Sans';
+    }
+
+    /* Modes */
+    body {
+      transition: background-color 0.5s;
+    }
+
+    /* Light Mode Styles */
+    body.light-mode {
+      background-color: #fff;
+      color: #000;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #fff;
+    }
+
+    body.dark-mode .container .card {
+      background-color: rgba(26, 26, 26, 0.8);
+    }
+
+    body.dark-mode .container .slide .content {
+      background-color: #1a1a1a;
+      color: #fff;
+    }
+
+    body.dark-mode .container .slide .content h5 {
+      background-color: #1a1a1a;
+      color: #fff;
+    }
+
+    body.dark-mode .container .slide .content p {
+      background-color: #1a1a1a;
+      color: #fff;
+    }
+
+    .dark-mode .Header {
+      color: #fff;
+    }
+
+    /* Navbar CSS */
+    .navbar .nav-item a:hover {
+      background-color: #a0a5a6;
+      border-radius: 7px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar-collapse.collapse.show {
+      display: flex !important;
+    }
+
+    /* Container CSS */
+    .container .card {
+      display: flex;
+      justify-content: space-between;
+      margin: 120px auto;
+      text-align: auto;
+      margin-left: auto;
+      width: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .container .card .slide .content p {
+      margin: 0;
+      padding: 0;
+      text-align: auto;
+      color: #414141;
+    }
+
+    .container .card .slide .content h5 {
+      margin: 0 0 10px 0;
+      padding: 0;
+      font-size: 24px;
+      text-align: center;
+      color: #414141;
+    }
+
+    .Header {
+      margin-top: 70px;
+      margin-bottom: -70px;
+      font-size: 24px;
+      text-align: center;
+      color: #414141;
+    }
+
+    .highlight-text {
+      color: #007BFF;
+    }
+
+    .Git a:hover {
+      background-color: #d6edf3;
+      border-radius: 7px;
+      padding: 10px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+  <title>Advin</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href=".">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"
+              href="https://github.com/AnyUserNameNotAvailable/Search-Engine-Project">GitHub</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#" onclick="darkModeToggle()">Mode</a>
+          </li>
+        </ul>
       </div>
-    </nav>
-    <!--About Section Card Container-->
-    <div class="Header">
-    <ul>
-      <h3>My mission is to display the <span class="highlight-text">software/application development</span><br>skills I have developed to <span class="highlight-text">potential employeers</span></h3>
-    </ul>
     </div>
+  </nav>
+  <!--About Section Card Container-->
+  <div class="Header">
+    <ul>
+      <h3>My mission is to display the <span class="highlight-text">software/application development</span><br>skills I
+        have developed to <span class="highlight-text">potential employeers</span></h3>
+    </ul>
+  </div>
   <div class="container">
-      <div class="card">
-        <div class="slide">
-          <div class="content">
-            <h5><strong>Mission Statement</strong></h5>
-            <ul>
-            <p>I wished to create a complete google-like search engine using the processes and techiques I cultivated while at the University of Maryland Eastern Shore</p>
-            <p> My focus was on making it user-friendly and efficient, blending advanced technologies while further developing my skills as a programer/ software developor.</p>
-            <p>My project reflects on my commitment, dedication and skills; I bring a unique blend of technical expertise and a user-centric approach,<br>making me an ideal candidate for contributing to cutting-edge projects in any team </p>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="Header">
-    <ul>
-      <h3>There is a GitHub repository with my frontend and backend code<br>along with a read me page containing further and more detailed information</h3>
-      <div class="Git" aria-current="page" href="https://github.com/AnyUserNameNotAvailable/Search-Engine-Project">
-      <a aria-current="page" href="https://github.com/AnyUserNameNotAvailable/Search-Engine-Project">Learn more about the backend</a>
-      </div>
-    </ul>
-    </div>
-    <div class="container">
-      <div class="card">
-        <div class="slide">
-          <div class="content">
-            <h5><strong>Advin:</strong> Search For Your Adventure</h5>
-            <ul>
-              <p>Small Scale Search Engine With The Following Steps:</p>
-              <li><strong>Scope:</strong> General search</li>
-              <li><strong>Web Crawling:</strong> Web crawler to fetch web pages, using Scrapy, NLTK and BeautifulSoup</li>
-              <li><strong>Indexing:</strong> Organize information gathered from web pages by parsing content, removing stop words, and creating an index that maps keywords to the documents where they appear</li>
-              <li><strong>Ranking Algorithm:</strong> Determine the relevance of search results</li>
-              <li><strong>Search Algorithm:</strong> Implemented a search algorithm to retrieve relevant search results based on user queries</li>
-              <li><strong>User Interface:</strong> Used HTML CSS and JavaScript to create front end minimalist design</li>
-              <p>The Backend was created using Python <br>The Frontend was created using HTML, CSS, and JavaScript </p>
-            </ul>
+    <div class="card">
+      <div class="slide">
+        <div class="content">
+          <h5><strong>Mission Statement</strong></h5>
+          <ul>
+            <p>I wished to create a complete google-like search engine using the processes and techiques I cultivated
+              while at the University of Maryland Eastern Shore</p>
+            <p> My focus was on making it user-friendly and efficient, blending advanced technologies while further
+              developing my skills as a programer/ software developor.</p>
+            <p>My project reflects on my commitment, dedication and skills; I bring a unique blend of technical
+              expertise and a user-centric approach,<br>making me an ideal candidate for contributing to cutting-edge
+              projects in any team </p>
+          </ul>
         </div>
       </div>
     </div>
   </div>
-      <script>
+  <div class="Header">
+    <ul>
+      <h3>There is a GitHub repository with my frontend and backend code<br>along with a read me page containing further
+        and more detailed information</h3>
+      <div class="Git" aria-current="page" href="https://github.com/AnyUserNameNotAvailable/Search-Engine-Project">
+        <a aria-current="page" href="https://github.com/AnyUserNameNotAvailable/Search-Engine-Project">Learn more about
+          the backend</a>
+      </div>
+    </ul>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="slide">
+        <div class="content">
+          <h5><strong>Advin:</strong> Search For Your Adventure</h5>
+          <ul>
+            <p>Small Scale Search Engine With The Following Steps:</p>
+            <li><strong>Scope:</strong> General search</li>
+            <li><strong>Web Crawling:</strong> Web crawler to fetch web pages, using Scrapy, NLTK and BeautifulSoup</li>
+            <li><strong>Indexing:</strong> Organize information gathered from web pages by parsing content, removing
+              stop words, and creating an index that maps keywords to the documents where they appear</li>
+            <li><strong>Ranking Algorithm:</strong> Determine the relevance of search results</li>
+            <li><strong>Search Algorithm:</strong> Implemented a search algorithm to retrieve relevant search results
+              based on user queries</li>
+            <li><strong>User Interface:</strong> Used HTML CSS and JavaScript to create front end minimalist design</li>
+            <p>The Backend was created using Python <br>The Frontend was created using HTML, CSS, and JavaScript </p>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
     // JavaScript to toggle dark mode
     const body = document.body;
 
@@ -183,6 +211,7 @@
         body.classList.add('dark-mode');
       }
     });  
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
