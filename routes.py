@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from sklearn.feature_extraction.text import TfidfVectorizer
 import json
-from indexing import search_documents
 
 
 app = Flask(__name__)

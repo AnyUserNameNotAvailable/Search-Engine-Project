@@ -1,3 +1,3 @@
 # indexing/__init__.py
 
-from .indexing import search_documents
+from .searching import search_documents
