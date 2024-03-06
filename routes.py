@@ -21,13 +21,13 @@ def index():
     # Render the main page (search form)
     return render_template('index.html')
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['post'])
 def search():
     query = request.form.get('query')
     # Process the query using your search function
     search_results = process_query(query, tfidf_vectorizer)
     # Render the results page with the search results
-    return render_template('results.html', search_results=search_results)
+    return render_template('search.html', search_results=search_results)
 
 @app.route('/about')
 def about():
