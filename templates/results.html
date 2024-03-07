@@ -119,12 +119,12 @@
           </li>
         </ul>
         <!-- Move the search bar and container into the navbar -->
-        <form id="searchForm" action="" class="search-bar">
-          <input type="search" autocomplete="" placeholder="Advin: Your Adventure Awaits..." />
-          <button>
-            <img src="https://img.icons8.com/ios/25/search--v1.png" alt="search--v1" />
-          </button>
-        </form>
+        <form id="searchForm" action="/search" method="post" class="search-bar">
+      <input type="search" name="query" autocomplete="" placeholder="Advin: Your Adventure Awaits..." required />
+      <button type="submit">
+        <img src="https://img.icons8.com/ios/25/search--v1.png" alt="search--v1" />
+      </button>
+    </form>
       </div>
     </div>
   </nav>
@@ -133,7 +133,7 @@
  {% for result in search_results %}
     <div class="result-item">
         <h3>{{ result.title }}</h3>
-        <p>{{ result.description }}</p>
+        <p>{{ result.description }}</p> <!--No discriptions implemted yet-->
         <a href="{{ result.url }}">Read more</a>
     </div>
 {% endfor %}
