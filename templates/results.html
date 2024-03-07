@@ -28,6 +28,15 @@
       color: #fff;
     }
 
+    .dark-mode .card-box {
+      background-color: #2c2c2c;
+      color: #fff;
+    }
+
+    .dark-mode .search-result-box .search-item {
+      border-bottom-color: #3e3e3e; /* Lighter border color for dark mode */
+    }
+
     /* Search CSS */
     .search-bar {
       width: 100%;
@@ -105,6 +114,39 @@
       background-color: #1a1a1a;
       margin-top: -50px 0;
     }
+    /* Search results */
+    .searchResults{
+      padding: 20px 120px 20px;
+      
+    }
+    .search-result-box {
+      padding: 20px;
+      background: #fff; /* Adjust according to your theme */
+      margin-top: 20px;
+    }
+
+    .pagination {
+      margin-top: 20px;
+    }
+        .card-box {
+      padding: 20px;
+      border-radius: 3px;
+      margin-bottom: 30px;
+      background-color: #fff;
+    }
+
+    .search-result-box .tab-content {
+      padding: 30px 30px 10px 30px;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      -moz-box-shadow: none;
+    }
+
+    .search-result-box .search-item {
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e3eaef;
+      margin-bottom: 20px;
+    }
   </style>
   <title>Results</title>
 </head>
@@ -129,14 +171,27 @@
     </div>
   </nav>
   <hr>
-  <div id="searchResults">
- {% for result in search_results %}
-    <div class="result-item">
-        <h3>{{ result.title }}</h3>
-        <p>{{ result.description }}</p> <!--No discriptions implemted yet-->
-        <a href="{{ result.url }}">Read more</a>
+    <div class="container">
+    <!-- Search Results Section with Pagination -->
+    <div class="search-result-box card-box">
+      <div class="row">
+        <!-- Loop through search results -->
+        {% for result in search_results %}
+        <div class="col-md-12">
+          <div class="search-item">
+            <h4 class="mb-1"><a href="{{ result.url }}">{{ result.title }}</a></h4>
+            <div class="font-13 text-success mb-3">{{ result.url }}</div>
+            <p class="mb-0 text-muted">{{ result.description }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
-{% endfor %}
+
+    <!-- Pagination -->
+    <ul class="pagination justify-content-end pagination-split mt-0">
+      <!-- Pagination links -->
+    </ul>
   </div>
 
   </div> <!-- Container for search results -->
