@@ -45,7 +45,7 @@ def search_documents(query, json_data, tfidf_vectorizer):
 
     # Display and return the top 10 most similar documents
     for i in sorted_indices[:10]:
-        print(f"Title: {json_data[i]['title']}\nURL: {json_data[i]['url']}\n")
+        print(f"Title: {json_data[i]['title']}\nDescripion: {json_data[i]['description']}\nURL: {json_data[i]['url']}\n")
 
     return [json_data[i] for i in sorted_indices[:10]] # Return the top 10 sorted documents
     # return json_data[sorted_indices[0]] # Return the first sorted document (for testing purposes)

@@ -9,6 +9,7 @@ from scrapy import Item, Field
 class MyItem(Item):
     title = Field()
     url = Field()
+    description = Field()
 
 class CrawlingSpider(CrawlSpider):
     name = 'crawlin'
@@ -33,13 +34,17 @@ class CrawlingSpider(CrawlSpider):
         item = MyItem()
         raw_title = response.css('title::text').get()
         url = response.url  # Extract the URL
+        description = response.css('p::text').get()  # Extract the description text
 
         # clean title
         cleaned_title = self.clean_text(raw_title)
+        cleaned_description = self.clean_text(description)
 
         # Assign the cleaned title and URL to the 'title' and 'url' fields in the item instance
         item['title'] = cleaned_title
         item['url'] = url
+        item['description'] = cleaned_description  # Add the cleaned description to the item instance
+        
 
         # Print or log the title and URL
         self.logger.info(f'Title: {item["title"]}, URL: {item["url"]}')

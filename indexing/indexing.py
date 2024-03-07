@@ -34,10 +34,11 @@ def delete_data_from_json(json_file):
     return []
 
 
-def index_doc_with_tfidf_to_json(title, url, tfidf_values, filename):
+def index_doc_with_tfidf_to_json(title, url, descripron, tfidf_values, filename):
     doc = {
         'title': title,
         'url': url,
+        'description': descripron,
         'tfidf_values': tfidf_values.tolist()
     }
     existing_data = read_from_json(filename)
@@ -70,7 +71,7 @@ def calculate_tfidf_and_index_to_json(documents, filename, tfidf_vectorizer):
     # Index documents with TF-IDF to JSON file
     for i, item in enumerate(crawled_items):
         tfidf_values = tfidf_matrix[i].toarray().flatten()
-        index_doc_with_tfidf_to_json(item['title'], item['url'], tfidf_values, filename)
+        index_doc_with_tfidf_to_json(item['title'], item['url'], item['description'], tfidf_values, filename)
         print(f"Indexed {item['title']} to JSON file")
 
     # Save the TF-IDF vectorizer to a file
