@@ -16,9 +16,22 @@ indexing.py:
     run_crawler: Run the web crawler to fetch data from a specified website.
     calculate_tfidf_and_index_to_json: Calculate TF-IDF values for documents and index them to a JSON file.
     Usage: It is used for the backend processes involved in indexing, such as running the crawler, calculating TF-IDF values, and storing the indexed data.
+searching.py:
+    Responsibility:
+    This file contains functions related to the searching process.
+    Functions:
+    read write and delete from json
+    search documents
 routes.py:
     Responsibility: This file defines the routes (endpoints) of your Flask web application. It handles incoming HTTP requests and defines the behavior of the web application.
     Endpoints:
-    /search: Handles GET requests for searching. Retrieves a search query from the request parameters, searches for matching documents in the loaded JSON data, and returns the results.
-    /index: Handles POST requests for indexing. Expects a JSON payload containing a website URL, crawls the specified website using the web crawler, and indexes the extracted data using TF-IDF.
-    Usage: It's used to run a web server that exposes these search and indexing functionalities to users or other systems.
+    home
+    about
+    search 
+Templates:
+Index:
+    Main page for search engine
+About:
+    an about page that describes project to potential users
+Results:
+    results page that dynamically loads content from data.json based on search query.
