@@ -130,12 +130,13 @@
   </nav>
   <hr>
   <div id="searchResults">
-    <!-- {% for result in search_results %}
-    <div class="result">
-      <h2>{{ result.title }}</h2>
-      <p>{{ result.url }}</p>
+ {% for result in search_results %}
+    <div class="result-item">
+        <h3>{{ result.title }}</h3>
+        <p>{{ result.description }}</p>
+        <a href="{{ result.url }}">Read more</a>
     </div>
-    {% endfor %} -->
+{% endfor %}
   </div>
 
   </div> <!-- Container for search results -->
@@ -158,45 +159,6 @@
       if (savedDarkMode === 'true') {
         body.classList.add('dark-mode');
       }
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.querySelector('.search-bar input');
-      const searchButton = document.getElementById('searchButton');
-
-      const searchFunction = () => {
-        const query = searchInput.value.trim();
-        if (query !== '') {
-          search_Backend(query);
-        } else {
-          alert('Please enter a search query.');
-        }
-      };
-
-      searchInput.addEventListener('keypress', function (event) {
-        const query = searchInput.value.trim();
-        if (event.key === 'Enter') {
-          event.preventDefault();
-          window.location.href = "./results"
-          searchFunction();
-        }
-      });
-
-      searchButton.addEventListener('click', function (event) {
-        const query = searchInput.value.trim();
-        event.preventDefault();
-        if (query !== '') {
-          window.location.href = "./results.html"
-          searchFunction();
-        }
-      });
-      // Display search results on the page
-      searchResultsDiv.innerHTML = ''; // Clear previous results
-      searchResults.results.forEach(result => {
-        const resultItem = document.createElement('div');
-        resultItem.textContent = `Title: ${result.title}, URL: ${result.url}`;
-        searchResultsDiv.appendChild(resultItem);
-      });
     });
 
   </script>

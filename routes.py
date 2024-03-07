@@ -8,7 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'indexing'))
 app = Flask(__name__)
 
 # Load the saved vectorizer
-vectorizer_path = 'tfidf_vectorizer.joblib'
+vectorizer_path = '/Users/femiadebisi/Search-Engine-Project/tfidf_vectorizer.joblib'
 tfidf_vectorizer = joblib.load(vectorizer_path)
 
 # Import your search function
@@ -27,7 +27,7 @@ def search():
     # Process the query using your search function
     search_results = process_query(query, tfidf_vectorizer)
     # Render the results page with the search results
-    return render_template('search.html', search_results=search_results)
+    return render_template('results.html', search_results=search_results)
 
 @app.route('/about')
 def about():

@@ -74,7 +74,7 @@ def calculate_tfidf_and_index_to_json(documents, filename, tfidf_vectorizer):
         print(f"Indexed {item['title']} to JSON file")
 
     # Save the TF-IDF vectorizer to a file
-    joblib.dump(tfidf_vectorizer, './tfidf_vectorizer.joblib')
+    joblib.dump(tfidf_vectorizer, 'tfidf_vectorizer.joblib')
     return tfidf_vectorizer, tfidf_matrix  # Return vectorizer and matrix
 
 

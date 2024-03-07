@@ -24,7 +24,9 @@ def delete_data_from_json(json_file):
     return []
 
 # Main search function
-def search_documents(query, json_data, vectorizer_path='tfidf_vectorizer.joblib'):
+def search_documents(query, json_data, tfidf_vectorizer):
+    query_vector = tfidf_vectorizer.transform([query])
+    
     # Load the trained TF-IDF vectorizer
     try:
         tfidf_vectorizer = joblib.load(vectorizer_path)
@@ -56,8 +58,8 @@ vectorizer_path = 'tfidf_vectorizer.joblib'  # Ensure this path matches where yo
 json_data = load_data_from_json(json_filename)
 
 # if json_data:
-    # query = input("Enter Search Query: ")
-    # search_result = search_documents(query, json_data, vectorizer_path)
-    # delete_data_from_json(json_filename)  # Delete the indexed data from the JSON file (forr testing purposes)
+#     query = input("Enter Search Query: ")
+#     search_result = search_documents(query, json_data, vectorizer_path)
+#     # delete_data_from_json(json_filename)  # Delete the indexed data from the JSON file (forr testing purposes)
 # else:
-    # print("No data found in the JSON file.")
+#     print("No data found in the JSON file.")
