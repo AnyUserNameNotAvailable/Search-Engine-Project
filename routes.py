@@ -8,7 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'indexing'))
 app = Flask(__name__)
 
 # Load the saved vectorizer
-vectorizer_path = '/Users/femiadebisi/Search-Engine-Project/tfidf_vectorizer.joblib'
+vectorizer_path = 'tfidf_vectorizer.joblib'
 tfidf_vectorizer = joblib.load(vectorizer_path)
 
 # Import your search function

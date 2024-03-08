@@ -69,11 +69,4 @@ class CrawlingSpider(CrawlSpider):
         stop_words = set(stopwords.words('english'))
         words = [word for word in text.split() if word.lower() not in stop_words]
 
-        # Stem words
-        stemmer = PorterStemmer()
-        words = [stemmer.stem(word) for word in words]
-
-        # Join words back into a string
-        text = ' '.join(words)
-
         return text
