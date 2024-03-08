@@ -17,7 +17,8 @@ class CrawlingSpider(CrawlSpider):
     USER_AGENT = 'MyCrawlerBot (+http://www.example.com)'
     custom_settings = {
         'DOWNLOAD_DELAY': 0.2,  # Add a delay between requests
-        'CLOSESPIDER_ITEMCOUNT': 10
+        'CLOSESPIDER_ITEMCOUNT': 100,  # Stop crawling after 10 pages
+        'ROBOTSTXT_OBEY': True
     }
 
     rules = (
@@ -52,6 +53,8 @@ class CrawlingSpider(CrawlSpider):
         yield item
 
     def clean_text(self, text):
+        if text is None:
+            return ''
         # Remove HTML tags
         soup = BeautifulSoup(text, 'html.parser')
         text = soup.get_text()

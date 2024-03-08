@@ -7,7 +7,7 @@ from scrapy.utils.project import get_project_settings
 import numpy as np
 
 # Instantiate the TfidfVectorizer once, at the beginning of the file
-tfidf_vectorizer = TfidfVectorizer(max_df=0.5)
+tfidf_vectorizer = TfidfVectorizer(max_df=0.7)
 
 def write_to_json(data, filename):
     with open(filename, 'w') as json_file:
@@ -34,12 +34,14 @@ def delete_data_from_json(json_file):
     return []
 
 
-def index_doc_with_tfidf_to_json(title, url, descripron, tfidf_values, filename):
+def index_doc_with_tfidf_to_json(title, url, description, tfidf_values, filename):
+    full_text = title + " " + description + " " + url
     doc = {
         'title': title,
         'url': url,
-        'description': descripron,
-        'tfidf_values': tfidf_values.tolist()
+        'description': description,
+        'tfidf_values': tfidf_values.tolist(),
+        'full_text': full_text,
     }
     existing_data = read_from_json(filename)
     existing_data.append(doc)
@@ -66,6 +68,7 @@ def run_crawler(start_url):
 
 def calculate_tfidf_and_index_to_json(documents, filename, tfidf_vectorizer):
     # Use the passed-in TF-IDF vectorizer
+    full_text = [item['title'] + ' ' + item['description'] + ' ' + item['url'] for item in crawled_items]
     tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
 
     # Index documents with TF-IDF to JSON file
