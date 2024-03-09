@@ -6,6 +6,9 @@ import joblib  # To save/load the TF-IDF vectorizer model
 from fuzzywuzzy import process, fuzz
 from nltk.corpus import wordnet as wn
 
+import nltk
+nltk.download('wordnet')
+
 # Utility functions
 def write_to_json(data, filename):
     with open(filename, 'w') as json_file:
