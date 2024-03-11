@@ -3,7 +3,6 @@ from scrapy.linkextractors import LinkExtractor
 from bs4 import BeautifulSoup
 import string
 from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
 from scrapy import Item, Field
 
 class MyItem(Item):

@@ -16,18 +16,21 @@ indexing.py:
     run_crawler: Run the web crawler to fetch data from a specified website.
     calculate_tfidf_and_index_to_json: Calculate TF-IDF values for documents and index them to a JSON file.
     Usage: It is used for the backend processes involved in indexing, such as running the crawler, calculating TF-IDF values, and storing the indexed data.
+
 searching.py:
     Responsibility:
     This file contains functions related to the searching process.
     Functions:
     read write and delete from json
     search documents
+
 routes.py:
     Responsibility: This file defines the routes (endpoints) of your Flask web application. It handles incoming HTTP requests and defines the behavior of the web application.
     Endpoints:
     home
     about
     search 
+
 Templates:
 Index:
     Main page for search engine
@@ -35,3 +38,29 @@ About:
     an about page that describes project to potential users
 Results:
     results page that dynamically loads content from data.json based on search query.
+
+Ideas for future update:
+    idea for autocomplete feature - would probably work like this.
+    
+    def get_suggestions(query):
+        # Load the JSON data
+        json_data = load_data_from_json('data.json')
+        # Get the suggestions
+        suggestions = suggest_documents(query, json_data)
+        return suggestions
+
+    def suggest_documents(query, json_data):
+        # Get the suggestions
+        suggestions = []
+        for document in json_data:
+            if query in document['title']:
+                suggestions.append(document['title'])
+        return suggestions
+
+    @app.route('/autocomplete', methods=['GET'])
+    def autocomplete():
+        query = request.form.get('query')
+        suggestions = get_suggestions(query)
+        return jsonify(suggestions)
+
+history/ previous searches feature

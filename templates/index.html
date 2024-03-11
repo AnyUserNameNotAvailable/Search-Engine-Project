@@ -46,6 +46,15 @@
       justify-content: center;
       flex-direction: column;
     }
+    .container h4 {
+      font-size: 120px;
+      width: auto;
+      background-image: linear-gradient(to right, #D3D3D3, #818589);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
 
     .search-bar {
       width: 100%;
@@ -112,6 +121,9 @@
     }
 
     /* Navbar CSS */
+    .navbar .nav-item a {
+      color: #6082B6;
+    }
     .navbar .nav-item a:hover {
       background-color: #a0a5a6;
       border-radius: 7px;
@@ -161,6 +173,7 @@
   </div>
 
   <script>
+    
     function search_Backend() {
       const query = document.getElementById('searchQuery').value; // Assuming 'searchQuery' is the ID of your search input field
 
@@ -207,7 +220,7 @@
       const searchInput = document.querySelector('.search input[type=search]');
 
     });
-
+    
 
   </script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

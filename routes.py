@@ -21,7 +21,7 @@ def index():
     # Render the main page (search form)
     return render_template('index.html')
 
-@app.route('/search', methods=['post'])
+@app.route('/search', methods=['POST'])
 def search():
     query = request.form.get('query')
     # Process the query using your search function

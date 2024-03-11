@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 import joblib  # To save/load the TF-IDF vectorizer model
-from fuzzywuzzy import process, fuzz
+from fuzzywuzzy import fuzz
 from nltk.corpus import wordnet as wn
 
 import nltk
@@ -85,8 +85,7 @@ def search_documents(query, json_data, tfidf_vectorizer):
         print(f"Title: {json_data[i]['title']}\nDescription: {json_data[i]['description']}\nURL: {json_data[i]['url']}\n")
 
     return [json_data[i] for _, i in combined_scores[:10]]  # Return the top 10 sorted documents based on combined score
-    # return [json_data[i] for i in sorted_indices[::100]] # Return every 100th sorted document (for testing purposes)
-
+    # return [json_data[i] for i in sorted_indices[::100]] # Return every 100th sorted document (for testing purposes)  
 
 # Example usage
 json_filename = 'data.json'
