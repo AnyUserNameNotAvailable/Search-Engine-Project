@@ -64,3 +64,5 @@ Ideas for future update:
         return jsonify(suggestions)
 
 history/ previous searches feature
+recomendation feature
+use a framwork like react for front end
