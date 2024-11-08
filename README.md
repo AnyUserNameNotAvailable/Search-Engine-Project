@@ -66,3 +66,4 @@ Ideas for future update:
 history/ previous searches feature
 recomendation feature
 use a framwork like react for front end
+Allow the user to directly add to the database - currently implenting this feature
